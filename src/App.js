@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Cart from './Component/Cart/Cart';
+import Person from './Component/Person/Person';
+import personData from './Component/fakeData/fakeData.json'
 
 function App() {
+  // const [person, setPerson] = useState([]);
+  
+  // useEffect(() => {
+  //   fetch('https://jsonplaceholder.typicode.com/users')
+  //     .then(res => res.json())
+  //     .then(data=> setPerson(data))
+  // }, [])
+
+  const [person, setPerson] = useState([]);
+  const [cart,setCart] = useState([]);
+  useEffect(() => {
+    setPerson(personData)
+    
+  },[])
+
+  const handleAddPerson = (person) => {
+    const newCart = [...cart,person];
+    setCart(newCart);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Cart cart={cart}></Cart>
+      {
+        person.map(person => 
+        <Person 
+          person={person}
+          handleAddPerson={handleAddPerson}>
+        </Person>)
+      }
     </div>
   );
 }
